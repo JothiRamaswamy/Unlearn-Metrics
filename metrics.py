@@ -2,6 +2,7 @@ import torch
 from load_model import *
 from scipy.stats import wasserstein_distance, entropy
 import numpy as np
+import torch.nn as nn
 
 def get_wasserstein_distance(tensor1, tensor2):
     dists = []
@@ -153,5 +154,9 @@ def get_metrics(directory):
     final_dict['w_forget_distance_O_RT'] = w_forget_distance_O_RT
     final_dict['w_forget_distance_O_FT'] = w_forget_distance_O_FT
     final_dict['w_forget_distance_O_GA'] = w_forget_distance_O_GA
+    
+    loss = nn.MSELoss()
+    final_dict['retrain_forget_loss_FT'] = loss(retrain_forget_pred, FT_forget_pred)
+    final_dict['retrain_forget_loss_GA'] = loss(retrain_forget_pred, GA_forget_pred)
 
     torch.save(final_dict, 'all_metrics.json')

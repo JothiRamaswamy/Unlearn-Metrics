@@ -1,4 +1,19 @@
 import json
+import torch
+
+def average_metric_dicts():
+    metric_types = ['FT10_GA5', 'FT15_GA7', 'FT20_GA10']
+    seeds = ['seed1_', 'seed2_', 'seed3_']
+    for metric in metric_types:
+        avg_dict = {}
+        metric_dicts = [torch.load(seed + metric + '/all_metrics.json') for seed in seeds]
+        keys = metric_dicts[0].keys()
+        for k in keys:
+            total = sum(d[k] for d in metric_dicts)
+            avg_dict[k] = float(total/3)
+            with open('final_metrics/' + metric + '.json', 'w') as file:
+                json.dump(avg_dict, file)
+                
 
 with open('FT10_GA5.json', 'r') as file:
     FT10_GA5 = json.load(file)
