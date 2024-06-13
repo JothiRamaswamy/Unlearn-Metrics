@@ -1,4 +1,4 @@
-#Folder Contents
+# Folder Contents
 
 `FT10_GA5.json`: contains metric results for methods of fine tuning with 10 epochs and gradient ascent over 5 epochs.
 
